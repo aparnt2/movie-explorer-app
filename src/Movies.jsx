@@ -10,52 +10,45 @@ function Movies() {
   const[sort,setSort]=useState('title')
   const[genre,setgenre]=useState([])
   const[selectedmovie,setSelectedMovie]=useState(null)
+  const API_KEY = import.meta.env.VITE_TMDB_KEY;
+
   
-  
-  useEffect(()=>{
-    const fetchmovies=async()=>{
-      const url=search?`https://api.themoviedb.org/3/search/movie?query=${search}`:`https://api.themoviedb.org/3/movie/popular`
-      const res=await fetch(url,{
-        method: "GET",
-        headers:{
-          Authorization:'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NDhhYzliYTUzY2IxNTBjNWM0ZjU0MTU0YWE3ZWQ2OSIsIm5iZiI6MTc2NDU4MzM5NS4yMzcsInN1YiI6IjY5MmQ2N2UzMDRjZTU3MGY5YWRjMzFiNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.vwgqioos8hJomiBxWpAZxtXpH54L-WgJ0pbwmGOLVSI',
-          'Content-Type':'application/json'
-          
-        }
-      })
-      const data=await res.json()
-      SetMovies(data.results)
+ useEffect(() => {
+  const fetchmovies = async () => {
+    try {
+      
+      const url = search
+        ? `https://api.themoviedb.org/3/search/movie?query=${search}&api_key=${API_KEY}`
+        : `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`;
+
+      const res = await fetch(url); 
+      const data = await res.json();
+      SetMovies(data.results);
       console.log(data.results);
-      
-
-    
+    } catch (err) {
+      console.error(err);
     }
-    fetchmovies()
-    console.log(movies);
-    
-  },[search])
+  };
 
-  useEffect(()=>{
-    const genre=async()=>{
-      const res=await fetch(`https://api.themoviedb.org/3/genre/movie/list`,{
-        method:'GET',
-        headers:{
-          Authorization:'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NDhhYzliYTUzY2IxNTBjNWM0ZjU0MTU0YWE3ZWQ2OSIsIm5iZiI6MTc2NDU4MzM5NS4yMzcsInN1YiI6IjY5MmQ2N2UzMDRjZTU3MGY5YWRjMzFiNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.vwgqioos8hJomiBxWpAZxtXpH54L-WgJ0pbwmGOLVSI',
-          
+  fetchmovies();
+}, [search]);
 
-        }
-        
 
-      })
-      const data=await res.json()
-      setgenre(data.genres)
-      console.log(data);
-      
-      
+ useEffect(() => {
+  const fetchGenres = async () => {
+    try {
+      const res = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`);
+      const data = await res.json();
+      setgenre(data.genres);
+      console.log(data.genres);
+    } catch (err) {
+      console.error(err);
     }
-    genre()
+  };
 
-  },[])
+  fetchGenres();
+}, []);
+
 
   const genreMap=Object.fromEntries(genre.map(g=>[g.id,g.name]))
 

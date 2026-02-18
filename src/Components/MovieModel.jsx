@@ -4,11 +4,12 @@ import { MdCancel } from "react-icons/md";
 
 function MovieModel({genre,movie,onClose}){
     const [moviekey,setmoviekey]=useState(null)
+     const API_KEY = import.meta.env.VITE_TMDB_KEY;
 
     useEffect(()=>{
        const fetchmovievideo=async ()=>{
                  try{
-            const res=await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=648ac9ba53cb150c5c4f54154aa7ed69`)
+            const res=await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${API_KEY}`)
             const data=await res.json()
             console.log(data);
            const tailer=data.results.find(v=>v.site === "YouTube" && v.type === "Trailer")
