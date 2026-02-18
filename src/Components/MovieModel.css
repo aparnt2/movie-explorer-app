@@ -1,0 +1,96 @@
+/* Container that dims the background */
+.movie-model {
+  position: fixed;
+  inset:0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85); /* Dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px); /* Softens the background */
+  
+}
+
+/* The actual content box */
+.movie-details {
+  background-color: #1a1a1a;
+  color: white;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease-out;
+ 
+}
+
+/* Modal animation */
+@keyframes fadeIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Image styling */
+.movie-details img {
+  width: 100%;
+  height: auto;
+  display: block;
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  position: relative;
+}
+
+/* Text spacing */
+.movie-details h3 {
+  padding: 20px 20px 10px;
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.movie-details p {
+  padding: 0 20px 30px;
+  line-height: 1.6;
+  color: #ccc;
+  font-size: 1rem;
+}
+
+/* Close button positioning */
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1001; /* Ensure it's above the content */
+  transition: transform 0.2s ease;
+}
+
+.close:hover {
+  transform: scale(1.1);
+}
+
+.cancel-btn {
+  color: white;
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+.movie-details-section{
+    position: absolute;
+    top: 160px;
+    left: 20px;
+    width: 500px;
+  
+}
+.watch-btn{
+    background-color:#990011 ;
+    width: 200px;
+    height: 45px;
+    border: none;
+    border-radius: 16px;
+}
+.movie-genre{
+   color: #ffffff;
+}
