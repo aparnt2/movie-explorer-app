@@ -1,96 +1,141 @@
-/* Container that dims the background */
+/* Full screen darkened backdrop */
 .movie-model {
   position: fixed;
-  inset:0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.85); /* Dark overlay */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(5px); /* Softens the background */
-  
+  z-index: 2000;
+  padding: 20px;
 }
 
-/* The actual content box */
+/* Modal Container */
 .movie-details {
-  background-color: #1a1a1a;
-  color: white;
-  width: 90%;
-  max-width: 800px;
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  background: #000;
   border-radius: 12px;
   overflow: hidden;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  animation: fadeIn 0.3s ease-out;
- 
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
 }
 
-/* Modal animation */
-@keyframes fadeIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-/* Image styling */
+/* Media (Video or Backdrop) */
+.movie-details iframe, 
 .movie-details img {
   width: 100%;
-  height: auto;
+  height: 550px;
+  object-fit: cover;
   display: block;
-  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-  position: relative;
 }
 
-/* Text spacing */
-.movie-details h3 {
-  padding: 20px 20px 10px;
-  margin: 0;
-  font-size: 1.8rem;
-}
-
-.movie-details p {
-  padding: 0 20px 30px;
-  line-height: 1.6;
-  color: #ccc;
-  font-size: 1rem;
-}
-
-/* Close button positioning */
-.close {
+/* The Gradient Overlay: This makes the text readable */
+.movie-details::after {
+  content: '';
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: transparent;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0.5) 40%, transparent 70%);
+  pointer-events: none; /* Allows clicking buttons through the gradient */
+}
+
+/* Text & Buttons Layer */
+.movie-details-section {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 40px;
+  z-index: 2; /* Ensures text is above the gradient */
+  width: 100%;
+  max-width: 600px; /* Keeps text from stretching too far wide */
+}
+
+.movie-details-section h3 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+.movie-details-section p {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  color: #e0e0e0;
+  margin-bottom: 20px;
+}
+
+/* Genre Tags */
+.movie-genre {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 25px;
+}
+
+/* Button Container */
+.button-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Gradient Watch Button */
+.watch-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(to right , #1f1614,#990011 ); 
+  color: white;
   border: none;
+  padding: 14px 35px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 8px;
   cursor: pointer;
-  z-index: 1001; /* Ensure it's above the content */
   transition: transform 0.2s ease;
 }
 
-.close:hover {
-  transform: scale(1.1);
+.watch-btn:hover {
+  transform: scale(1.05);
 }
 
-.cancel-btn {
+/* The '+' Button */
+.add-btn {
+  background: rgba(255, 255, 255, 0.2);
   color: white;
-  font-size: 2.5rem;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  border: none;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.movie-details-section{
-    position: absolute;
-    top: 160px;
-    left: 20px;
-    width: 500px;
-  
+
+/* Close Icon (Top Right) */
+.close {
+  position: absolute;
+  top: 60px;
+  right :60px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.8;
 }
-.watch-btn{
-    background-color:#990011 ;
-    width: 200px;
-    height: 45px;
-    border: none;
-    border-radius: 16px;
-}
-.movie-genre{
-   color: #ffffff;
+
+.close:hover {
+  opacity: 1;
 }
